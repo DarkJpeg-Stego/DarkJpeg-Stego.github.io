@@ -1,52 +1,47 @@
+#
+Copyright(C) 2013 John Modica@ CybernetiX - S3C
 
-# Copyright (C) 2013 Mikhail Mukovnikov <m.mukovnikov@gmail.com>
+# Permission is hereby granted, free of charge, to any person obtaining# a copy of this software and associated documentation files(the# "Software"), to deal in the Software without restriction, including# without limitation the rights to use, copy, modify, merge, publish, #distribute, sublicense, and / or sell copies of the Software, and to# permit persons to whom the Software is furnished to do so, subject to# the following conditions:
 
-# Permission is hereby granted, free of charge, to any person obtaining
-# a copy of this software and associated documentation files (the
-# "Software"), to deal in the Software without restriction, including
-# without limitation the rights to use, copy, modify, merge, publish,
-# distribute, sublicense, and/or sell copies of the Software, and to
-# permit persons to whom the Software is furnished to do so, subject to
-# the following conditions:
+        #The above copyright notice and this permission notice shall be# included in all copies or substantial portions of the Software.
 
-# The above copyright notice and this permission notice shall be
-# included in all copies or substantial portions of the Software.
+    #
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, #EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.#IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, #TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-global = 
-    optAction: null, fileData: null, dropDown:  null,
+global =
+    optAction: null, fileData: null, dropDown: null,
     optMethod: null, fileJpeg: null, dropTimer: null,
-    optData:   null, prvData:  null, dropTarg:  null,
-    optJpeg:   null, prvJpeg:  null, 
-    optSafe:   null,
-    optPass:   null
+    optData: null, prvData: null, dropTarg: null,
+    optJpeg: null, prvJpeg: null,
+    optSafe: null,
+    optPass: null
 
-testBrowser = (error) ->
+testBrowser = (error) - >
     nav = navigator.appName
-    ua  = navigator.userAgent
-    ans = ua.match /(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\d+)*)/i
-    tem = ua.match /version\/([\d]+)/i if ans?
-    ans[2] = tem[1] if tem?
-    ans = [ans[1], parseInt ans[2]] if ans?
-    ans = [nav, navigator.appVersion] if not ans?
-    if ans[0] == 'Safari' and ans[1] > 5  or
-       ans[0] == 'Chrome' and ans[1] > 24  or
-       ans[0] == 'Firefox' and ans[1] > 16
-        return true
-    window.location.replace error
+ua = navigator.userAgent
+ans = ua.match / (opera | chrome | safari | firefox | msie)\ / ? \s * (\. ? \d + (\d + ) * ) / i
+tem = ua.match / version\ / ([\d] + ) / i
+if ans ?
+    ans[2] = tem[1]
+if tem ?
+    ans = [ans[1], parseInt ans[2]]
+if ans ?
+    ans = [nav, navigator.appVersion]
+if not ans ?
+    if ans[0] == 'Safari'
+and ans[1] > 5 or
+ans[0] == 'Chrome'
+and ans[1] > 24 or
+ans[0] == 'Firefox'
+and ans[1] > 16
+return true
+window.location.replace error
 
-eventVoid = (event) ->
+eventVoid = (event) - >
     event.stopPropagation()
-    event.preventDefault()
+event.preventDefault()
 
-controlAbort = (event) ->
+controlAbort = (event) - >
     if event.which == 27
         eventVoid event
         return abort()
