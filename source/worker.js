@@ -1,6 +1,4 @@
-
 // Copyright (C) 2013 John Modica @ CybernetiX-S3C
-
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -8,10 +6,8 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -19,35 +15,30 @@
 // CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 "use strict";
 
-var Exception = function (name, message)
-{
+var Exception = function(name, message) {
     this.name = name;
     this.message = message;
     this.prototype = new Error();
     this.prototype.constructor = this;
 }
 
-this.onmessage = function (event)
-{
-    try
-    {
-        switch (event.data.action)
-        {
-        case "encrypt":
-            new Crypto(event.data.name,
-                event.data.buffer, event.data.pass, 0);
-            break;
+this.onmessage = function(event) {
+        try {
+            switch (event.data.action) {
+                case "encrypt":
+                    new Crypto(event.data.name,
+                        event.data.buffer, event.data.pass, 0);
+                    break;
 
-        case "decrypt":
-            new Crypto(null, null, event.data.pass, 1);
-            break;
+                case "decrypt":
+                    new Crypto(null, null, event.data.pass, 1);
+                    break;
 
-        case "encode":
-            new JPEGEncoder(event.data.method, event.data.buffer,
-                event.data.width, event.data.height);
+                case "encode":
+                    new JPEGEncoder(event.data.method, event.data.buffer,
+                        event.data.width, event.data.height);
             break;
 
         case "decode":
