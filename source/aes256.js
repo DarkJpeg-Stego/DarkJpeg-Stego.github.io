@@ -1,4 +1,3 @@
-
 /** @fileOverview Low-level AES implementation.
  *
  * This file contains a low-level implementation of AES, optimized for
@@ -15,7 +14,6 @@
  * @author Mike Hamburg
  * @author Dan Boneh
  */
-
 /**
  * Schedule out an AES key for both encryption and decryption.  This
  * is a low-level class.  Use a cipher mode to do bulk encryption.
@@ -25,29 +23,39 @@
  *
  * @class Advanced Encryption Standard (low-level interface)
  */
+var AES256 = function(data, pass, dir) {
+        var AESKey;
 
-var AES256 = function (data, pass, dir)
-{
-    var AESKey;
+        function precompute() {
+                AES256.prototype.tables = [
+                    [
+                        [],
+                        [],
+                        [],
+                        [],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [],
+                        [],
+                        []
+                    ]
+                ];
 
-    function precompute()
-    {
-        AES256.prototype.tables = [[[],[],[],[],[]],[[],[],[],[],[]]];
+                var encTable = AES256.prototype.tables[0],
+                    decTable = AES256.prototype.tables[1],
+                    sbox = encTable[4],
+                    sboxInv = decTable[4],
+                    i, x, xInv, d = [],
+                    th = [],
+                    x2, x4, x8, s, tEnc, tDec;
 
-        var encTable = AES256.prototype.tables[0],
-            decTable = AES256.prototype.tables[1],
-            sbox = encTable[4],
-            sboxInv = decTable[4],
-            i, x, xInv, d = [],
-            th = [],
-            x2, x4, x8, s, tEnc, tDec;
-
-        // Compute double and third tables
-        for (i = 0; i < 256; i++)
-        {
-            th[(d[i] = i << 1 ^ (i >> 7) * 283) ^ i] = i;
-        }
-
+                // Compute double and third tables
+                for (i = 0; i < 256; i++) {
+                    th[(d[i] = i << 1 ^ (i >> 7) * 283) ^ i] = i;
+                }
         for (x = xInv = 0; !sbox[x]; x ^= x2 || 1, xInv = th[xInv] || 1)
         {
             // Compute sbox
