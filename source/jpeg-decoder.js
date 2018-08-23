@@ -1,4 +1,3 @@
-
 /*
    Copyright (C) 2011 notmasteryet
 
@@ -17,7 +16,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
 // - The JPEG specification can be found in the ITU CCITT Recommendation T.81
 //   (www.w3.org/Graphics/JPEG/itu-t81.pdf)
 // - The JFIF specification can be found in the JPEG File Interchange Format
@@ -25,29 +23,28 @@
 // - The Adobe Application-Specific JPEG markers in the Supporting the DCT Filters
 //   in PostScript Level 2, Technical Note #5116
 //   (partners.adobe.com/public/developer/en/ps/sdk/5116.DCT_Filter.pdf)
+var JPEGDecoder = function(method, buf) {
+        var dctZigZag = new Int8Array([
+            0, 1, 8, 16, 9, 2, 3, 10,
+            17, 24, 32, 25, 18, 11, 4, 5,
+            12, 19, 26, 33, 40, 48, 41, 34,
+            27, 20, 13, 6, 7, 14, 21, 28,
+            35, 42, 49, 56, 57, 50, 43, 36,
+            29, 22, 15, 23, 30, 37, 44, 51,
+            58, 59, 52, 45, 38, 31, 39, 46,
+            53, 60, 61, 54, 47, 55, 62, 63
+        ]);
 
-var JPEGDecoder = function (method, buf)
-{
-    var dctZigZag = new Int8Array([
-         0,  1,  8, 16,  9,  2,  3, 10,
-        17, 24, 32, 25, 18, 11,  4,  5,
-        12, 19, 26, 33, 40, 48, 41, 34,
-        27, 20, 13,  6,  7, 14, 21, 28,
-        35, 42, 49, 56, 57, 50, 43, 36,
-        29, 22, 15, 23, 30, 37, 44, 51,
-        58, 59, 52, 45, 38, 31, 39, 46,
-        53, 60, 61, 54, 47, 55, 62, 63
-    ]);
+        function buildHuffmanTable(codeLengths, values) {
+                var k = 0,
+                    code = [],
+                    i, j, length = 16;
 
-    function buildHuffmanTable(codeLengths, values)
-    {
-        var k = 0,
-            code = [],
-            i, j, length = 16;
-
-        while (length > 0 && !codeLengths[length - 1]) length--;
-        code.push({children: [], index: 0});
-
+                while (length > 0 && !codeLengths[length - 1]) length--;
+                code.push({
+                    children: [],
+                    index: 0
+                });
         var p = code[0], q;
         for (i = 0; i < length; i++)
         {
